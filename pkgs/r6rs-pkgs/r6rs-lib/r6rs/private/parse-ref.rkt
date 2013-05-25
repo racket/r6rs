@@ -54,16 +54,24 @@
                          (values (list (car strs)) "main")
                          (values (reverse (cdr (reverse strs)))
                                  (car (reverse strs)))))])
-       (let ([base (build-path (with-handlers ([exn:fail?
-                                                (lambda (exn)
-                                                  (err
-                                                   (format 
-                                                    "cannot find suitable library installed (exception: ~a)"
-                                                    (if (exn? exn)
-                                                        (exn-message exn)
-                                                        exn))))])
-                                 (apply collection-path coll))
-                               file)])
+       (let ([base (with-handlers ([exn:fail?
+                                    (lambda (exn)
+                                      (err
+                                       (format 
+                                        "cannot find suitable library installed (exception: ~a)"
+                                        (if (exn? exn)
+                                            (exn-message exn)
+                                            exn))))])
+                     (with-handlers ([exn:fail?
+                                      (lambda (exn)
+                                        ;; Next, try collection (hopefully not spliced):
+                                        (build-path (apply collection-path coll)
+                                                    file))])
+                       ;; First, try specific file in collection, which works
+                       ;; when the relevant collection is spliced:
+                       (path-replace-suffix
+                        (apply collection-file-path (path-add-suffix file #".rkt") coll)
+                        #"")))])
          (let ([vers.ext (find-version (path->bytes base) (syntax->datum #'(vers ...)))])
            (if vers.ext
                (apply string-append

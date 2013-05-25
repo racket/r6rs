@@ -1,6 +1,8 @@
 #lang scribble/doc
 @(require scribble/manual
           scribble/bnf
+          (only-in scribble/core style)
+          scribble/html-properties
           (for-label setup/dirs
                      rnrs/programs-6
                      rnrs/base-6
@@ -23,9 +25,12 @@
 @(define r6rs @elem{R@superscript{6}RS})
 @(define r5rs @elem{R@superscript{5}RS})
 
+@(define r6rs-std (style #f (list (install-resource "r6rs-std")
+                                  (install-resource "r6rs-lib-std"))))
+
 @title{R6RS: Scheme}
 
-The @link["../r6rs-std/index.html"]{The Revised@superscript{6} Report
+The @link[#:style r6rs-std "r6rs-std/index.html"]{The Revised@superscript{6} Report
 on the Algorithmic Language Scheme} defines a dialect of Scheme. We
 use @defterm{@|r6rs|} to refer to both the standard and the language
 defined by the standard.
@@ -416,8 +421,7 @@ several known ways:
 @(define (cvt-elem i)
    (list (car i)
          (cadr i)
-         (build-path 'up 
-                     (dir-of (caddr i))
+         (build-path (dir-of (caddr i))
                      (caddr i))
          (cadddr i)))
 
@@ -426,7 +430,7 @@ several known ways:
     (subsection #:tag (format "~a" 'mod-path) 
              (racket lib) ": " title)
     (defmodule mod-path)
-    "Original specification: " (link (format "../~a/~a#~a" (dir-of html) html anchor)
+    "Original specification: " (link (format "~a/~a#~a" (dir-of html) html anchor)
                                      title)
     (make-binding-redirect-elements
      'mod-path
