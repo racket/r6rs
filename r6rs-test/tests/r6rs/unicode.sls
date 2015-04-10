@@ -99,6 +99,9 @@
     (test (string-titlecase "R6RS") "R6rs") ; this one, too
 
     (test (string-downcase "A\x3A3;:x") "a\x3C3;:x") ; : is a MidLetter
+    (test (string-downcase "A\x3A3;.x") "a\x3C3;.x") ; . is a MidNumLet
+    (test (string-downcase "A\x3A3;'x") "a\x3C3;'x") ; ' is a Single_Quote
+    (test (string-downcase "A\x3C3;_x") "a\x3C3;_x") ; _ is not case-ignorable
 
     (test (string-ci<? "a" "Z") #t)
     (test (string-ci<? "A" "z") #t)
