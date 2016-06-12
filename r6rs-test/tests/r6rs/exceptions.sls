@@ -86,6 +86,14 @@
       (test v '(out in out in)))
       
 
+     (test/output
+       (guard (con
+               ((violation? con)
+                (display (condition-message con))
+                'violation))
+              (read (open-string-input-port "\\xDDDD;")))
+       'violation
+       "out of range escape: `\\xDDDD;'")
       
     ;;
     ))
