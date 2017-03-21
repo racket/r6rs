@@ -7,9 +7,7 @@
          vector-sort!)
 
 (define (list-sort < l)
-  ;; FIXME (performance): `sort' internally converts 
-  ;; a list to an mlist!
-  (list->mlist (sort (mlist->list l) <)))
+  (sort l <))
 
 (define (vector-sort < v)
   (list->vector (sort (vector->list v) <)))
