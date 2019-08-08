@@ -1,0 +1,24 @@
+language: c
+
+env:
+- PATH=~/racket/bin:$PATH
+- VARIANT=cs PATH=~/racket/bin:$PATH
+
+before_install:
+- if [ $VARIANT = "cs" ]; then curl -L -o installer.sh http://www.cs.utah.edu/plt/snapshots/current/installers/racket-current-x86_64-linux-cs-xenial.sh; else curl -L -o installer.sh http://www.cs.utah.edu/plt/snapshots/current/installers/racket-current-x86_64-linux-precise.sh; fi
+- sh installer.sh --in-place --dest ~/racket/
+
+install:
+- raco pkg install --auto -i --no-setup --skip-installed r6rs-test
+- racket -l- pkg/dirs-catalog --link --check-metadata pkgs-catalog .
+- echo file://`pwd`/pkgs-catalog/ > catalog-config.txt
+- raco pkg config catalogs >> catalog-config.txt
+- raco pkg config --set catalogs `cat catalog-config.txt`
+- raco pkg update -i --auto --no-setup r6rs-test/
+- raco setup --pkgs r6rs-test
+- ls $HOME/.racket/download-cache
+- racket -v
+
+script:
+- racket -l tests/r6rs/run.sps
+
