@@ -10,3 +10,6 @@
 (define pkg-desc "implementation (no documentation) part of \"r6rs\"")
 
 (define pkg-authors '(mflatt))
+
+(define license
+  '(Apache-2.0 OR MIT))
