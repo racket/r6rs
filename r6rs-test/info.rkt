@@ -7,3 +7,6 @@
 (define pkg-desc "tests for \"r6rs\"")
 
 (define pkg-authors '(mflatt))
+
+(define license
+  '(Apache-2.0 OR MIT))
