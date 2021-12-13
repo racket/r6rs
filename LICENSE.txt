@@ -11,7 +11,7 @@ for the full text of the licenses.
 
 This repository contains the text of the R6RS standard, in
 r6rs-doc/r6rs/scribblings/r6rs-{lib-std,std}/. That document is
-distributed with the following license:
+distributed under the SchemeReport license:
 
     We intend this report to belong to the entire Scheme community,
     and so we grant permission to copy it in whole or in part without
