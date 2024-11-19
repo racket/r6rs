@@ -278,6 +278,11 @@
             (else 'other))
           'other)
 
+    (test (case 'x ; should still match 'x despite (y z)
+	    ((x (y z)) 'a)
+	    (else 'b))
+	  'a)
+
     (test (and (= 2 2) (> 2 1)) #t)
     (test (and (= 2 2) (< 2 1)) #f)
     (test (and 1 2 'c '(f g)) '(f g))
