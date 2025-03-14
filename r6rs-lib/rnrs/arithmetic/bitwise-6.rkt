@@ -1,4 +1,6 @@
 #lang scheme/base
+(require (only-in racket/base
+                  bitwise-first-bit-set))
 
 (provide bitwise-and
          bitwise-ior
@@ -31,14 +33,6 @@
             cnt
             (loop (arithmetic-shift i -1)
                   (+ cnt (if (eq? 1 (bitwise-and i 1)) 1 0)))))))
-
-(define (bitwise-first-bit-set b)
-  (if (zero? b)
-      -1
-      (let loop ([b b][pos 0])
-        (if (zero? (bitwise-and b 1))
-            (loop (arithmetic-shift b -1) (add1 pos))
-            pos))))
 
 (define (bitwise-copy-bit b n bit)
   (unless (exact-nonnegative-integer? n)

@@ -3,7 +3,7 @@
 (define collection 'multi)
 
 (define deps '("scheme-lib"
-               "base"
+               ["base" #:version "8.16.0.4"]
                "r5rs-lib"
                "compatibility-lib"))
 
