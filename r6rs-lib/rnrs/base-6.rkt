@@ -11,6 +11,8 @@
          (for-syntax r6rs/private/reconstruct)
          (prefix-in r5rs: r5rs)
          (only-in r6rs/private/readtable rx:number)
+         (only-in racket/symbol
+                  [symbol->immutable-string r6rs:symbol->string])
          scheme/bool)
 
 (provide 
@@ -129,7 +131,7 @@
 
  ;; 11.10
  symbol? (rename-out [r6rs:symbol=? symbol=?])
- string->symbol symbol->string
+ string->symbol (rename-out [r6rs:symbol->string symbol->string])
  
  ;; 11.11
  char? char=? char<? char>? char<=? char>=?
