@@ -3,7 +3,9 @@
 (require (only-in rnrs/base-6
                   div-and-mod div mod
                   div0-and-mod0 div0 mod0)
-         (prefix-in core: scheme/fixnum)
+         (rename-in (prefix-in core: scheme/fixnum)
+                    [core:most-positive-fixnum greatest-fixnum]
+                    [core:most-negative-fixnum least-fixnum])
          rnrs/arithmetic/bitwise-6
          r6rs/private/num-inline
          (for-syntax r6rs/private/inline-rules))
@@ -22,20 +24,9 @@
          fxreverse-bit-field)
          ;; Many other provides from macros below
 
-(define CS? (eq? 'chez-scheme (system-type 'vm)))
-(define 64-bit? (fixnum? (expt 2 33)))
-
-;; These would be better provided by Racket, instead of hardwiring
-;; numbers based on `system-type` results...
-(define (fixnum-width) (if CS?
-                           (if 64-bit? 61 30)
-                           (if 64-bit? 63 31)))
-(define (least-fixnum) (if CS?
-                           (if 64-bit? (- (expt 2 60)) -536870912)
-                           (if 64-bit? (- (expt 2 62)) -1073741824)))
-(define (greatest-fixnum) (if CS?
-                              (if 64-bit? (- (expt 2 60) 1) +536870911)
-                              (if 64-bit? (- (expt 2 62) 1) +1073741823)))
+(define (fixnum-width)
+  ;; add 1 to include sign bit
+  (core:fx+ 1 (integer-length (greatest-fixnum))))
 
 (define-syntax-rule (check v alt)
   (if (fixnum? v)
